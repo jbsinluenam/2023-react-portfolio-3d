@@ -1,12 +1,12 @@
 /* eslint-disable react/no-unknown-property */
-import React, { Suspense } from "react"
+import { Suspense } from "react"
 import { Canvas } from "@react-three/fiber"
 import { Decal, Float, OrbitControls, Preload, useTexture } from "@react-three/drei"
 import CanvasLoader from '../Loader'
 
 const Ball = ({ props }) => {
 
-  const [decal] = useTexture(["props.imgUrl"])
+  const [decal] = useTexture(["props.imgUrl"]);
 
   return (
     <Float
@@ -15,22 +15,20 @@ const Ball = ({ props }) => {
       <ambientLight intensity={0.25} />
       <directionalLight position={[0, 0, 0.05]} />
       <mesh castShadow receiveShadow scale={2.75} >
-
         <icosahedronBufferGeometry args={[1, 1]} />
         <meshStandardMaterial
-          color="fff8eb"
+          color="#fff8eb"
           polygonOffset
           polygonOffsetFactor={-5}
-          floatShading
+          flatShading
+        /><Decal
+          position={[0, 0, 0.5]}
+          rotaion={[2 * Math.PI, 0, 6.25]}
+          flatShading
+          map={decal}
+
         />
       </mesh>
-      <Decal
-        position={[0, 0, 0.5]}
-        map={decal}
-
-      />
-
-      Ball
     </Float>
   )
 }
@@ -40,7 +38,7 @@ const BallCanvas = ({ icon }) => {
   return (
     <Canvas
       frameLoop="demand"
-
+      dpr={[1, 2]}
       gl={{ preserveDrawingBuffer: true }}>
 
       <Suspense fallback={<CanvasLoader />}>
@@ -55,4 +53,4 @@ const BallCanvas = ({ icon }) => {
   )
 }
 
-export default BallCanvas
+export default BallCanvas;
